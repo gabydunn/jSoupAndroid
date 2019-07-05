@@ -7,10 +7,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 
 public class Fragmentviewpager extends Fragment {
     View view;
+
     public Fragmentviewpager(){
 
     }

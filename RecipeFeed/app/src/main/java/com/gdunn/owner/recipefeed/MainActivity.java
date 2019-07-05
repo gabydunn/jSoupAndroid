@@ -20,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager_id);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         //Add fragments
-        adapter.AddFragment(new Fragmentviewpager(), "Saved");
         adapter.AddFragment(new FragmentExplore(), "Explore");
+        adapter.AddFragment(new Fragmentviewpager(), "Saved");
         adapter.AddFragment(new FragmentYour(), "Your recipes");
         //Adapter setup
         viewPager.setAdapter(adapter);

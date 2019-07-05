@@ -32,5 +32,5 @@
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/viewPager_id"></android.support.v4.view.ViewPager>
+        android:id="@+id/viewPager_id"/>
 </LinearLayout>
