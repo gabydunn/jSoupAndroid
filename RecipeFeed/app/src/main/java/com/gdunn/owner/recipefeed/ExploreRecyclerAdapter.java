@@ -35,9 +35,9 @@ public class ExploreRecyclerAdapter extends RecyclerView.Adapter<ExploreRecycler
     @Override
     public void onBindViewHolder(@NonNull NewViewHolder holder, int i) {
         final RecipeCardModel currentRecipe = recipeCardList.get(i);
-        Picasso.with(nContext).load(currentRecipe.getImageUri()).into(holder.recipeImage);
         holder.title.setText(currentRecipe.getTitle());
         holder.description.setText(currentRecipe.getDescription());
+       Picasso.with(nContext).load(currentRecipe.getImageUri()).into(holder.recipeImage);
 
         //TODO: set up on click listener for launch full recipe activity
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {

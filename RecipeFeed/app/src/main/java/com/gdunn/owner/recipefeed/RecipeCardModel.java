@@ -5,6 +5,8 @@ public class RecipeCardModel {
     private String title;
     private String imageUri;
     private String description;
+    private String associatedURL;
+
 
     public int getId() {
         return id;
@@ -37,4 +39,6 @@ public class RecipeCardModel {
     public void setDescription(String description) {
         this.description = description;
     }
+
+
 }
