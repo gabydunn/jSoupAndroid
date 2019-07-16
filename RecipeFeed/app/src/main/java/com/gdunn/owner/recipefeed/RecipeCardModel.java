@@ -40,5 +40,11 @@ public class RecipeCardModel {
         this.description = description;
     }
 
+    public String getAssociatedURL() {
+        return associatedURL;
+    }
 
+    public void setAssociatedURL(String associatedURL) {
+        this.associatedURL = associatedURL;
+    }
 }

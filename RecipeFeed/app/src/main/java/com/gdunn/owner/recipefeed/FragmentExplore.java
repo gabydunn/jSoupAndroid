@@ -70,10 +70,13 @@ public class FragmentExplore extends Fragment {
                     //Image url
                     Elements mElementImage =mMainPage.select("img[class=fixed-recipe-card__img]").eq(i);
                     String imageURL =mElementImage.attr("data-original-src");
+                    Elements mElementURL = mMainPage.select("a[class=ng-isolate-scope]").eq(i);
+                    String associatedURL = mElementURL.attr("href");
                     //Load card instance
                     newCard.setDescription(mDescription);
                     newCard.setImageUri(imageURL);
                     newCard.setTitle(mTitle);
+                    newCard.setAssociatedURL(associatedURL);
                     newCard.setId(i);
 
                     exploreRecipes.add(newCard);

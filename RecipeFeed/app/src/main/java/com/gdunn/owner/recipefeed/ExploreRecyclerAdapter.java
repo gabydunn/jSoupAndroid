@@ -44,7 +44,7 @@ public class ExploreRecyclerAdapter extends RecyclerView.Adapter<ExploreRecycler
             //Dummy on click
             @Override
             public void onClick(View v) {
-                Toast.makeText(nContext, currentRecipe.getTitle(), Toast.LENGTH_LONG).show();
+                Toast.makeText(nContext, currentRecipe.getAssociatedURL(), Toast.LENGTH_LONG).show();
             }
         });
     }
