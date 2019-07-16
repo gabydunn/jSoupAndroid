@@ -35,6 +35,23 @@
             android:layout_margin="5dp"
             android:id="@+id/recipecard_description"
             android:layout_below="@id/recipecard_title"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/recipecard_authorimage"
+            android:layout_below="@+id/recipecard_description"
+            android:src="@drawable/noimageicon"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recipecard_description"
+            android:layout_toEndOf="@id/recipecard_authorimage"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            android:id="@+id/recipecard_authorname"
+            android:text="Author name" />
 
     </RelativeLayout>
 

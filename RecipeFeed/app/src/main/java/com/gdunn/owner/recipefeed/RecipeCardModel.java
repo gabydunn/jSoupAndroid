@@ -6,7 +6,24 @@ public class RecipeCardModel {
     private String imageUri;
     private String description;
     private String associatedURL;
+    private String authorName;
+    private String authorImage;
 
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public String getAuthorImage() {
+        return authorImage;
+    }
+
+    public void setAuthorImage(String authorImage) {
+        this.authorImage = authorImage;
+    }
 
     public int getId() {
         return id;
@@ -47,4 +64,5 @@ public class RecipeCardModel {
     public void setAssociatedURL(String associatedURL) {
         this.associatedURL = associatedURL;
     }
+
 }
