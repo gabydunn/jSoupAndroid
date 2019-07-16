@@ -1,6 +1,7 @@
 package com.gdunn.owner.recipefeed;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -44,7 +45,10 @@ public class ExploreRecyclerAdapter extends RecyclerView.Adapter<ExploreRecycler
             //Dummy on click
             @Override
             public void onClick(View v) {
-                Toast.makeText(nContext, currentRecipe.getAssociatedURL(), Toast.LENGTH_LONG).show();
+                Intent intent =new Intent(nContext, webview_activity.class);
+                intent.putExtra(webview_activity.WEB_ADDRESS, currentRecipe.getAssociatedURL());
+                nContext.startActivity(intent);
+
             }
         });
     }
