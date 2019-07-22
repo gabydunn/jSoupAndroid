@@ -77,7 +77,7 @@ public class FragmentExplore extends Fragment {
                     Elements mElementAuthorImage = mMainPage.select("img[class=cook-img]").eq(i);
                     String authorImageURL = mElementAuthorImage.attr("src");
                     //URL to recipe
-                    Elements mElementURL = mMainPage.select("div[class=grid-card-image-container] > a").eq(i);
+                    Elements mElementURL = mMainPage.select("div[class=grid-card-image-container] > a:lt(1)").eq(i);
                     String associatedURL = mElementURL.attr("href");
                     //Load card instance
                     newCard.setDescription(mDescription);
