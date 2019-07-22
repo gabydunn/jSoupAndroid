@@ -50,6 +50,7 @@ public class ExploreRecyclerAdapter extends RecyclerView.Adapter<ExploreRecycler
             //Dummy on click
             @Override
             public void onClick(View v) {
+                //temporary webview for testing
                 Intent intent =new Intent(nContext, webview_activity.class);
                 intent.putExtra(webview_activity.WEB_ADDRESS, currentRecipe.getAssociatedURL());
                 nContext.startActivity(intent);
