@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class FragmentYour extends Fragment {
+
+    //This will be an activity that contains recipes you've created
     View view;
     public FragmentYour(){
 

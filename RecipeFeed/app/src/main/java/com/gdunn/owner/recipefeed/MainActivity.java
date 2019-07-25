@@ -15,11 +15,9 @@ import android.widget.RelativeLayout;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.lang.annotation.Documented;
 import java.util.ArrayList;
 
 
@@ -43,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         //Add fragments
         adapter.AddFragment(new FragmentExplore(), "Explore");
-        adapter.AddFragment(new Fragmentviewpager(), "Saved");
+        adapter.AddFragment(new FragmentSaved(), "Saved");
         adapter.AddFragment(new FragmentYour(), "Your recipes");
         //Adapter setup
         viewPager.setAdapter(adapter);

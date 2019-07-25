@@ -58,6 +58,7 @@ public class ExploreRecyclerAdapter extends RecyclerView.Adapter<ExploreRecycler
 //               Intent intent = new Intent(nContext, singleRecipe.class);
 //               nContext.startActivity(intent);
 
+
             }
         });
     }

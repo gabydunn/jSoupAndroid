@@ -7,22 +7,19 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-
-import com.squareup.picasso.Picasso;
 
 
-public class Fragmentviewpager extends Fragment {
+public class FragmentSaved extends Fragment {
+    //This will be an activity that contains recipes you've saved
     View view;
-
-    public Fragmentviewpager(){
+    public FragmentSaved(){
 
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.viewpager_layout,container,false);
+        view = inflater.inflate(R.layout.saved_layout,container,false);
         return view;
     }
 }
