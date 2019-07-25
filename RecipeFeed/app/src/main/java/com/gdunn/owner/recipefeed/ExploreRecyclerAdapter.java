@@ -51,9 +51,12 @@ public class ExploreRecyclerAdapter extends RecyclerView.Adapter<ExploreRecycler
             @Override
             public void onClick(View v) {
                 //temporary webview for testing
-                Intent intent =new Intent(nContext, webview_activity.class);
-                intent.putExtra(webview_activity.WEB_ADDRESS, currentRecipe.getAssociatedURL());
-                nContext.startActivity(intent);
+               Intent intent =new Intent(nContext, webview_activity.class);
+               intent.putExtra(webview_activity.WEB_ADDRESS, currentRecipe.getAssociatedURL());
+               nContext.startActivity(intent);
+               //setup for when adapter is done
+//               Intent intent = new Intent(nContext, singleRecipe.class);
+//               nContext.startActivity(intent);
 
             }
         });
