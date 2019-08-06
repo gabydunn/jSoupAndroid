@@ -12,7 +12,7 @@ public class recipeContent {
         this.type = type;
         this.collectedContent = collectedContent;
     }
-
+    public recipeContent(){}
     public int getType() {
         return type;
     }

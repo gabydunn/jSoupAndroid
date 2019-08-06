@@ -56,7 +56,21 @@ public class singleRecipe extends AppCompatActivity {
 
                 //collect all the ingredient uls into one list of li
                 List<Element> ingredients = mRecipePage.select("ul.checklist > li > label > span[itemprop=recipeIngredient]");
-
+                for(int i=0; i<ingredients.size(); i++){
+                    if(i==0)
+                    {
+                        recipeContent headerItem = new recipeContent();
+                        headerItem.setType(recipeContent.TITLE_TYPE);
+                        headerItem.setCollectedContent("Ingredients");
+                        ingredients_directions.add(headerItem);
+                    }
+                    Element currentItem = ingredients.get(i);
+                    recipeContent ingredientItem = new recipeContent();
+                    ingredientItem.setType(recipeContent.INGREDIENTS_TYPE);
+                    ingredientItem.setCollectedContent(currentItem.text());
+                    ingredients_directions.add(ingredientItem);
+                }
+                
 
 
 
