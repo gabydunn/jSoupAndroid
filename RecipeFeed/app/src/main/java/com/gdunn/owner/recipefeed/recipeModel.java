@@ -8,7 +8,7 @@ public class recipeModel {
     private String authorImage;
     private String recipeImage;
     private String description;
-    private List<recipeModel> ingredients_directions;
+    private List<recipeContent> ingredients_directions;
 
     public String getTitle() {
         return title;
@@ -50,11 +50,11 @@ public class recipeModel {
         this.description = description;
     }
 
-    public List<recipeModel> getIngredients_directions() {
+    public List<recipeContent> getIngredients_directions() {
         return ingredients_directions;
     }
 
-    public void setIngredients_directions(List<recipeModel> ingredients_directions) {
+    public void setIngredients_directions(List<recipeContent> ingredients_directions) {
         this.ingredients_directions = ingredients_directions;
     }
 }
