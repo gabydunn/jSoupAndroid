@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:id="@+id/singleRecipeLayout"
     >
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,6 +21,7 @@
             app:contentScrim="@color/colorPrimary"
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleMarginEnd="64dp"
+            android:id="@+id/collapsingToolbar"
             app:title="Temporary Title"
             >
             <ImageView

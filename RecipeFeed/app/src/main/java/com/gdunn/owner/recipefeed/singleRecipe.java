@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
 
 import org.jsoup.Jsoup;
@@ -19,6 +22,8 @@ public class singleRecipe extends AppCompatActivity {
     private String intentURL;
     public static String WEB_ADDRESS = "web_address";
     public recipeModel model;
+    public int test;
+    public View mainView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +31,7 @@ public class singleRecipe extends AppCompatActivity {
         Intent intent = getIntent();
         intentURL = intent.getStringExtra(WEB_ADDRESS);
         new recipeLoader().execute();
+        //layoutLoader();
 
 
     }
@@ -70,8 +76,22 @@ public class singleRecipe extends AppCompatActivity {
                     ingredientItem.setCollectedContent(currentItem.text());
                     ingredients_directions.add(ingredientItem);
                 }
-                
-
+                List<Element> directions = mRecipePage.select("ol[itemprop=recipeInstructions] > li");
+                for(int i=0; i<directions.size();i++)
+                {
+                    if(i==0)
+                    {
+                        recipeContent headerItem = new recipeContent();
+                        headerItem.setType(recipeContent.TITLE_TYPE);
+                        headerItem.setCollectedContent("Directions");
+                        ingredients_directions.add(headerItem);
+                    }
+                    Element currentItem = directions.get(i);
+                    recipeContent directionItem = new recipeContent();
+                    directionItem.setType(recipeContent.DIRECTIONS_TYPE);
+                    directionItem.setCollectedContent(currentItem.text());
+                    ingredients_directions.add(directionItem);
+                }
 
 
             }catch (IOException e)
@@ -86,5 +106,11 @@ public class singleRecipe extends AppCompatActivity {
 
             super.onPostExecute(aVoid);
         }
+    }
+    private void layoutLoader()
+    {
+//        mainView = LayoutInflater.from(this).inflate(R.layout.recipelayout,getParent(),false);
+//        CollapsingToolbarLayout toolbarLayout = mainView.findViewById(R.id.collapsingToolbar);
+//        toolbarLayout.setTitle(model.getTitle());
     }
 }
