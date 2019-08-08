@@ -8,11 +8,15 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,7 +35,6 @@ public class singleRecipe extends AppCompatActivity {
         Intent intent = getIntent();
         intentURL = intent.getStringExtra(WEB_ADDRESS);
         new recipeLoader().execute();
-        //layoutLoader();
 
 
     }
@@ -50,6 +53,9 @@ public class singleRecipe extends AppCompatActivity {
                 //select and set recipe title
                 String title = mRecipePage.select("h1#recipe-main-content").text();
                 model.setTitle(title);
+                //select and set recipe image
+                Elements imageElement = mRecipePage.select("img#BI_openPhotoModal1");
+                model.setRecipeImage(imageElement.attr("src"));
                 //select and set author name
                 String authorName = mRecipePage.select("span[class=submitter__name]").text();
                 model.setAuthor(authorName);
@@ -105,12 +111,19 @@ public class singleRecipe extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
 
             super.onPostExecute(aVoid);
+            layoutLoader();
         }
     }
+    //Method to load layout with content from the model
     private void layoutLoader()
     {
-//        mainView = LayoutInflater.from(this).inflate(R.layout.recipelayout,getParent(),false);
-//        CollapsingToolbarLayout toolbarLayout = mainView.findViewById(R.id.collapsingToolbar);
-//        toolbarLayout.setTitle(model.getTitle());
+        mainView = LayoutInflater.from(this).inflate(R.layout.recipelayout,null);
+        //Set toolbar title
+        CollapsingToolbarLayout toolbarLayout = mainView.findViewById(R.id.collapsingToolbar);
+        toolbarLayout.setTitle(model.getTitle());
+        //Set recipe image
+        ImageView recipeImage = mainView.findViewById(R.id.recipe_image);
+        Picasso.with(this).load(model.getRecipeImage()).into(recipeImage);
+        setContentView(mainView);
     }
 }
