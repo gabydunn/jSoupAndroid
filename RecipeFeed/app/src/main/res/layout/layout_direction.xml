@@ -3,11 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
+    android:id="@+id/layout_direction"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/direction_number"
+        android:id="@+id/textview_directionNumber"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="5dp"
@@ -15,9 +16,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/direction_text"
+        android:id="@+id/textview_direction"
         android:text="Lightly oil the grill grate. Place meat on the grill, and cook 10 to 15 minutes per side, or to desired doneness. Grill to rare or medium rare for best flavor. Remove from grill, and slice lengthwise into thin strips. Top with a large dollop of blue cheese butter, and serve."
-        app:layout_constraintLeft_toRightOf="@id/direction_number"
+        app:layout_constraintLeft_toRightOf="@id/textview_directionNumber"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="5dp"/>

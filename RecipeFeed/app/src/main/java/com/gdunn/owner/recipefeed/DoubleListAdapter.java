@@ -2,38 +2,56 @@ package com.gdunn.owner.recipefeed;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 
-public class doubleListAdapter extends RecyclerView.Adapter {
+public class DoubleListAdapter extends RecyclerView.Adapter {
 
     Context nContext;
     List<recipeContent> data;
     int total_types;
+    int directionCount =1;
 
     //TODO: set up view holders to reflect their layouts
     public static class HeaderTypeViewHolder extends RecyclerView.ViewHolder{
-        public HeaderTypeViewHolder(@NonNull View itemView) {
-            super(itemView);
+        TextView headerText;
+        ConstraintLayout layout;
+        public HeaderTypeViewHolder(@NonNull View parent) {
+            super(parent);
+            this.headerText = parent.findViewById(R.id.textview_header);
+            this.layout = parent.findViewById(R.id.layout_header);
         }
     }
     public static class IngredientsTypeViewHolder extends RecyclerView.ViewHolder{
-
-        public IngredientsTypeViewHolder(@NonNull View itemView) {
-            super(itemView);
+        TextView ingredientText;
+        ConstraintLayout layout;
+        public IngredientsTypeViewHolder(@NonNull View parent) {
+            super(parent);
+            this.ingredientText = parent.findViewById(R.id.textview_ingredient);
+            this.layout = parent.findViewById(R.id.layout_ingredient);
         }
     }
     public static class DirectionTypeViewHolder extends RecyclerView.ViewHolder{
+        TextView directionText;
+        TextView directionNumber;
+        ConstraintLayout layout;
 
-        public DirectionTypeViewHolder(@NonNull View itemView) {
-            super(itemView);
+        public DirectionTypeViewHolder(@NonNull View parent) {
+            super(parent);
+
+            this.directionNumber = parent.findViewById(R.id.textview_directionNumber);
+            this.directionText = parent.findViewById(R.id.textview_direction);
+            this.layout = parent.findViewById(R.id.layout_direction);
+
         }
     }
-    public doubleListAdapter(Context context, List<recipeContent> contents)
+    public DoubleListAdapter(Context context, List<recipeContent> contents)
     {
         this.data = contents;
         this.nContext = context;
@@ -74,16 +92,22 @@ public class doubleListAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         recipeContent currentItem = data.get(position);
 
         if(currentItem!= null){
             switch (currentItem.getType()){
                 case recipeContent.TITLE_TYPE:
+                    ((HeaderTypeViewHolder) holder).headerText.setText(currentItem.getCollectedContent());
                     break;
                 case recipeContent.INGREDIENTS_TYPE:
+                    ((IngredientsTypeViewHolder) holder).ingredientText.setText(currentItem.getCollectedContent());
+
                     break;
                 case recipeContent.DIRECTIONS_TYPE:
+                    ((DirectionTypeViewHolder) holder).directionText.setText(currentItem.getCollectedContent());
+                    ((DirectionTypeViewHolder) holder).directionNumber.setText(Integer.toString(directionCount)+".");
+                    directionCount++;
                     break;
             }
         }

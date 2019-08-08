@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,6 +32,8 @@ public class singleRecipe extends AppCompatActivity {
     public recipeModel model;
     public int test;
     public View mainView;
+    RecyclerView recipeRecycler;
+    List<recipeContent> ingredients_directions;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +53,7 @@ public class singleRecipe extends AppCompatActivity {
                 //set up new recipe instance
                 model = new recipeModel();
                 //set up new list of ingredients/directions
-                List<recipeContent> ingredients_directions = new ArrayList<>();
+                ingredients_directions = new ArrayList<>();
                 //retrieve html document
                 Document mRecipePage = Jsoup.connect(intentURL).get();
                 //select and set recipe title
@@ -110,8 +116,13 @@ public class singleRecipe extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
 
-            super.onPostExecute(aVoid);
             layoutLoader();
+            recipeRecycler = mainView.findViewById(R.id.recipe_recycler);
+            DoubleListAdapter adapter = new DoubleListAdapter(getApplicationContext(), ingredients_directions);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+            recipeRecycler.setLayoutManager(mLayoutManager);
+            recipeRecycler.setAdapter(adapter);
+            super.onPostExecute(aVoid);
         }
     }
     //Method to load layout with content from the model
