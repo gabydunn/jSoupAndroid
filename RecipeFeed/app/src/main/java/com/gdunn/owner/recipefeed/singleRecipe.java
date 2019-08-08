@@ -134,7 +134,11 @@ public class singleRecipe extends AppCompatActivity {
         toolbarLayout.setTitle(model.getTitle());
         //Set recipe image
         ImageView recipeImage = mainView.findViewById(R.id.recipe_image);
-        Picasso.with(this).load(model.getRecipeImage()).into(recipeImage);
+        if(!model.getRecipeImage().isEmpty())
+        {
+            Picasso.with(this).load(model.getRecipeImage()).into(recipeImage);
+        }
+
         setContentView(mainView);
     }
 }
