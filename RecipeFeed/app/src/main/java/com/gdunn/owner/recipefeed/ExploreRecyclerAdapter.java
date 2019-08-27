@@ -41,8 +41,15 @@ public class ExploreRecyclerAdapter extends RecyclerView.Adapter<ExploreRecycler
         final RecipeCardModel currentRecipe = recipeCardList.get(i);
         holder.title.setText(currentRecipe.getTitle());
         holder.description.setText(currentRecipe.getDescription());
-       Picasso.with(nContext).load(currentRecipe.getImageUri()).into(holder.recipeImage);
-       Picasso.with(nContext).load(currentRecipe.getAuthorImage()).into(holder.authorImage);
+        if(!currentRecipe.getImageUri().isEmpty())
+        {
+            Picasso.with(nContext).load(currentRecipe.getImageUri()).into(holder.recipeImage);
+        }
+       if(!currentRecipe.getAuthorImage().isEmpty())
+       {
+           Picasso.with(nContext).load(currentRecipe.getAuthorImage()).into(holder.authorImage);
+       }
+
        holder.authorname.setText(currentRecipe.getAuthorName());
 
         //TODO: set up on click listener for launch full recipe activity

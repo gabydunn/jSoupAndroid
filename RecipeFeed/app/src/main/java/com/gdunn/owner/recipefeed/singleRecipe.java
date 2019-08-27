@@ -2,6 +2,7 @@ package com.gdunn.owner.recipefeed;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -12,6 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -41,7 +44,10 @@ public class singleRecipe extends AppCompatActivity {
         Intent intent = getIntent();
         intentURL = intent.getStringExtra(WEB_ADDRESS);
         new recipeLoader().execute();
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window window = getWindow();
+            window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
 
     }
     private class recipeLoader extends AsyncTask<Void,Void,Void>
@@ -56,54 +62,112 @@ public class singleRecipe extends AppCompatActivity {
                 ingredients_directions = new ArrayList<>();
                 //retrieve html document
                 Document mRecipePage = Jsoup.connect(intentURL).get();
-                //select and set recipe title
-                String title = mRecipePage.select("h1#recipe-main-content").text();
-                model.setTitle(title);
-                //select and set recipe image
-                Elements imageElement = mRecipePage.select("img#BI_openPhotoModal1");
-                model.setRecipeImage(imageElement.attr("src"));
-                //select and set author name
-                String authorName = mRecipePage.select("span[class=submitter__name]").text();
-                model.setAuthor(authorName);
-                //select and set author image source
-                String authorImageURL = mRecipePage.select("img[class=img-profile--submitter]").attr("src");
-                model.setAuthorImage(authorImageURL);
-                //select and set description
-                String description = mRecipePage.select("div[class=submitter__description]").text();
-                model.setDescription(description);
-
-                //collect all the ingredient uls into one list of li
-                List<Element> ingredients = mRecipePage.select("ul.checklist > li > label > span[itemprop=recipeIngredient]");
-                for(int i=0; i<ingredients.size(); i++){
-                    if(i==0)
-                    {
-                        recipeContent headerItem = new recipeContent();
-                        headerItem.setType(recipeContent.TITLE_TYPE);
-                        headerItem.setCollectedContent("Ingredients");
-                        ingredients_directions.add(headerItem);
-                    }
-                    Element currentItem = ingredients.get(i);
-                    recipeContent ingredientItem = new recipeContent();
-                    ingredientItem.setType(recipeContent.INGREDIENTS_TYPE);
-                    ingredientItem.setCollectedContent(currentItem.text());
-                    ingredients_directions.add(ingredientItem);
-                }
-                List<Element> directions = mRecipePage.select("ol[itemprop=recipeInstructions] > li");
-                for(int i=0; i<directions.size();i++)
+                //Two different page layouts currently on website, this will allow jSoup to read the alternate layout
+                Elements pageType = mRecipePage.select("body[ng-app=allrecipes]");
+                if(pageType.size() >0)
                 {
-                    if(i==0)
-                    {
-                        recipeContent headerItem = new recipeContent();
-                        headerItem.setType(recipeContent.TITLE_TYPE);
-                        headerItem.setCollectedContent("Directions");
-                        ingredients_directions.add(headerItem);
+                    //select and set recipe title
+                    String title = mRecipePage.select("h1#recipe-main-content").text();
+                    model.setTitle(title);
+                    //select and set recipe image
+                    Elements imageElement = mRecipePage.select("img[class=rec-photo]");
+                    model.setRecipeImage(imageElement.attr("src"));
+                    //select and set author name
+                    String authorName = mRecipePage.select("span[class=submitter__name]").text();
+                    model.setAuthor(authorName);
+                    //select and set author image source
+                    String authorImageURL = mRecipePage.select("img[class=img-profile--submitter]").attr("src");
+                    model.setAuthorImage(authorImageURL);
+                    //select and set description
+                    String description = mRecipePage.select("div[class=submitter__description]").text();
+                    model.setDescription(description);
+
+                    //collect all the ingredient uls into one list of li
+                    List<Element> ingredients = mRecipePage.select("ul.checklist > li > label > span[itemprop=recipeIngredient]");
+                    for(int i=0; i<ingredients.size(); i++){
+                        if(i==0)
+                        {
+                            recipeContent headerItem = new recipeContent();
+                            headerItem.setType(recipeContent.TITLE_TYPE);
+                            headerItem.setCollectedContent("Ingredients");
+                            ingredients_directions.add(headerItem);
+                        }
+                        Element currentItem = ingredients.get(i);
+                        recipeContent ingredientItem = new recipeContent();
+                        ingredientItem.setType(recipeContent.INGREDIENTS_TYPE);
+                        ingredientItem.setCollectedContent(currentItem.text());
+                        ingredients_directions.add(ingredientItem);
                     }
-                    Element currentItem = directions.get(i);
-                    recipeContent directionItem = new recipeContent();
-                    directionItem.setType(recipeContent.DIRECTIONS_TYPE);
-                    directionItem.setCollectedContent(currentItem.text());
-                    ingredients_directions.add(directionItem);
+                    List<Element> directions = mRecipePage.select("ol[itemprop=recipeInstructions] > li");
+                    for(int i=0; i<directions.size();i++)
+                    {
+                        if(i==0)
+                        {
+                            recipeContent headerItem = new recipeContent();
+                            headerItem.setType(recipeContent.TITLE_TYPE);
+                            headerItem.setCollectedContent("Directions");
+                            ingredients_directions.add(headerItem);
+                        }
+                        Element currentItem = directions.get(i);
+                        recipeContent directionItem = new recipeContent();
+                        directionItem.setType(recipeContent.DIRECTIONS_TYPE);
+                        directionItem.setCollectedContent(currentItem.text());
+                        ingredients_directions.add(directionItem);
+                    }
+                }else
+                {
+                    //select and set recipe title
+                    Elements titleElement = mRecipePage.select("head > meta[property=og:title]");
+                    String title = titleElement.attr("content");
+                    model.setTitle(title);
+                    //select and set recipe image
+                    Elements imageElement = mRecipePage.select("head > meta[name=pinterest:media]");
+                    model.setRecipeImage(imageElement.attr("content"));
+                    //select and set author name
+                    String authorName = mRecipePage.select("span[class=author-name-title]").text();
+                    model.setAuthor(authorName);
+                    //select and set author image source
+                    Elements authorImageURLElement = mRecipePage.select("div[class=author-text] > img");
+                    String authorImageURL = authorImageURLElement.attr("src");
+                    model.setAuthorImage(authorImageURL);
+                    //select and set description
+                    String description = mRecipePage.select("div[class=submitter__description]").text();
+                    model.setDescription(description);
+
+                    //collect all the ingredient uls into one list of li
+                    List<Element> ingredients = mRecipePage.select("ul.checklist > li > label > span[itemprop=recipeIngredient]");
+                    for(int i=0; i<ingredients.size(); i++){
+                        if(i==0)
+                        {
+                            recipeContent headerItem = new recipeContent();
+                            headerItem.setType(recipeContent.TITLE_TYPE);
+                            headerItem.setCollectedContent("Ingredients");
+                            ingredients_directions.add(headerItem);
+                        }
+                        Element currentItem = ingredients.get(i);
+                        recipeContent ingredientItem = new recipeContent();
+                        ingredientItem.setType(recipeContent.INGREDIENTS_TYPE);
+                        ingredientItem.setCollectedContent(currentItem.text());
+                        ingredients_directions.add(ingredientItem);
+                    }
+                    List<Element> directions = mRecipePage.select("ol[itemprop=recipeInstructions] > li");
+                    for(int i=0; i<directions.size();i++)
+                    {
+                        if(i==0)
+                        {
+                            recipeContent headerItem = new recipeContent();
+                            headerItem.setType(recipeContent.TITLE_TYPE);
+                            headerItem.setCollectedContent("Directions");
+                            ingredients_directions.add(headerItem);
+                        }
+                        Element currentItem = directions.get(i);
+                        recipeContent directionItem = new recipeContent();
+                        directionItem.setType(recipeContent.DIRECTIONS_TYPE);
+                        directionItem.setCollectedContent(currentItem.text());
+                        ingredients_directions.add(directionItem);
+                    }
                 }
+
 
 
             }catch (IOException e)

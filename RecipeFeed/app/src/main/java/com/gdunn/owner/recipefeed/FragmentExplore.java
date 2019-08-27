@@ -60,24 +60,23 @@ public class FragmentExplore extends Fragment {
                 mElementSize = mElementDataSize.size();
                 for(int i=0; i<mElementSize;i++){
                     RecipeCardModel newCard = new RecipeCardModel();
-
                     //Title
-                    Elements mElementTitle =mMainPage.select("span[class=fixed-recipe-card__title-link]").eq(i);
+                    Elements mElementTitle =mElementDataSize.select("span[class=fixed-recipe-card__title-link]").eq(i);
                     String mTitle =mElementTitle.text();
                     //Description
-                    Elements mElementDescription =mMainPage.select("div[class=fixed-recipe-card__description]").eq(i);
+                    Elements mElementDescription =mElementDataSize.select("div[class=fixed-recipe-card__description]").eq(i);
                     String mDescription =mElementDescription.text();
                     //Image url
-                    Elements mElementImage =mMainPage.select("img[class=fixed-recipe-card__img]").eq(i);
+                    Elements mElementImage =mElementDataSize.select("img[class=fixed-recipe-card__img]").eq(i);
                     String imageURL =mElementImage.attr("data-original-src");
                     //Author name
-                    Elements mElementAuthorName = mMainPage.select("ul[class=cook-submitter-info] > li > h4").eq(i);
+                    Elements mElementAuthorName = mElementDataSize.select("ul[class=cook-submitter-info] > li > h4").eq(i);
                     String authorName = mElementAuthorName.text();
                     //Author image
-                    Elements mElementAuthorImage = mMainPage.select("img[class=cook-img]").eq(i);
+                    Elements mElementAuthorImage = mElementDataSize.select("img[class=cook-img]").eq(i);
                     String authorImageURL = mElementAuthorImage.attr("src");
                     //URL to recipe
-                    Elements mElementURL = mMainPage.select("div[class=grid-card-image-container] > a:lt(1)").eq(i);
+                    Elements mElementURL = mElementDataSize.select("div[class=grid-card-image-container] > a:lt(1)").eq(i);
                     String associatedURL = mElementURL.attr("href");
                     //Load card instance
                     newCard.setDescription(mDescription);
